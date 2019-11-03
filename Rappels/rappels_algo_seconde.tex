@@ -1,0 +1,816 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{rappels\_algo\_seconde}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{rappels-de-seconde-sur-les-algorithmes-et-le-langage-python}{%
+\section{Rappels de seconde sur les algorithmes et le langage
+Python}\label{rappels-de-seconde-sur-les-algorithmes-et-le-langage-python}}
+
+    \hypertarget{i---affectations-et-variables}{%
+\subsection{I - Affectations et
+variables}\label{i---affectations-et-variables}}
+
+\hypertarget{duxe9finition}{%
+\subsubsection{Définition}\label{duxe9finition}}
+
+\begin{quote}
+Un algorithme est une suite finie d'opérations élémentaires, à appliquer
+dans un ordre déterminé, à des données.
+\end{quote}
+
+Dans un algorithme, on utilise des \textbf{variables}. Elles représente
+des nombres ou d'autres objets (listes, chaînes de caractère, \ldots{})
+et on utilise une lettre ou un mot pour les désigner. On modifie leur
+valeur lors d'\textbf{affectations}.
+
+On peut se représenter mentalement une variable comme une boîte pouvant
+contenir des objets et munit d'une étiquette : son nom. Ici deux
+variables \(a\) et \(b\).
+
+La variable \(a\) est vide et la variable \(b\) contient le nombre \(3\)
+:
+
+On effectue par exemple les affectations suivantes :
+
+\begin{quote}
+\(a\leftarrow 4\)\\
+\(b\leftarrow a+b\)
+\end{quote}
+
+Voici le résultat de ces affectations en mémoire :
+
+Les algorithmes utilisent chacun des instructions très diverses, mais on
+peut ranger ces instructions en quatre grandes familles, à découvrir
+tout au long de l'année : - \textit{entrée/sortie} ou encore
+\textit{saisie/affichage}: permettent à l'utilisateur d'interagir avec
+l'algorithme en précisant une valeur lors de l'utilisation et désignant
+le résultat obtenu ; - \textit{affectation de variables} : définissent
+ou modifient la valeur d'une variable ; -
+\textit{instructions conditionnelles} : elles permettent de tester des
+conditions et proposer des choix ; - \textit{boucles} : elles permettent
+de répéter des instructions.
+
+    \hypertarget{exemple}{%
+\subsubsection{Exemple}\label{exemple}}
+
+On considère l'algorithme de calcul suivant : - Choisir un nombre entier
+\(n\). - Lui ajouter \(4\). - Multiplier la somme obtenue par le nombre
+choisi. - Ajouter \(4\) à ce produit. - Écrire le résultat \(r\).
+
+Il est utile d'écrire les algorithmes dans un langage proche de celui
+utilisé par les ordinateurs. Ici, l'algorithme serait :
+
+\begin{quote}
+\textbf{Saisir} \(n\)\\
+\(r\leftarrow n+4\)\\
+\(r\leftarrow r\times n\)\\
+\(r\leftarrow 4+r\)\\
+\textbf{Afficher} \(r\)
+\end{quote}
+
+    Voici la traduction de cet algorithme en Python :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Pour executer une cellule on appuie simultanément sur MAJ et ENTRER}
+        \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} tutormagic
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{tutor} \PYZhy{}\PYZhy{}lang python3 \PYZhy{}\PYZhy{}height 500
+        \PYZsh{} Pour voir l\PYZsq{}exécution du script pas à pas
+        n = eval(input(\PYZdq{}Saisir n : \PYZdq{}))
+        r = n + 4
+        r = r * n
+        r = 4 + r
+        print(r)
+\end{Verbatim}
+
+    \hypertarget{exercice-1}{%
+\subsubsection{Exercice 1}\label{exercice-1}}
+
+Écrire les scripts Python, sur le modèle précédent, correspondants aux
+expressions suivantes (il ne doit y a voir qu'une seule opération
+élémentaire par ligne) :
+
+\textbf{1)} \(7(x+2)^2\) ;
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{n}{x}\PY{o}{=}\PY{n+nb}{eval}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x = }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y}\PY{o}{=}\PY{n}{x}\PY{o}{+}\PY{l+m+mi}{2}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+x = 5
+7
+
+    \end{Verbatim}
+
+    \textbf{2)} \((7x+2)^2\) ;
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \textbf{3)} \(7x^2+2\) ;
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \textbf{4)} \((7x)^2+2\) ;
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \textbf{5)} \(\dfrac{7x}{2}+3\);
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \textbf{6)} \(\dfrac{7x+2}{2}\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{exercice-2}{%
+\subsubsection{Exercice 2}\label{exercice-2}}
+
+On considère l'algorithme ci-dessous :
+
+\begin{quote}
+\textbf{Saisir} \(p\)\\
+\(c\leftarrow p-1\)\\
+\(p\leftarrow p+1\)\\
+\(p\leftarrow p\times p-c\times c\)
+\end{quote}
+
+\textbf{1.} Qu'obtient-on à la fin de l'algorithme pour : \(p=2\) ? pour
+\(p=5\) ?
+
+    
+
+    \textbf{2.} Le traduire en Python ci-dessous pour vérifier vos réponse :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{exercice-3}{%
+\subsubsection{Exercice 3}\label{exercice-3}}
+
+On considère l'algorithme ci-dessous :
+
+\begin{quote}
+\textbf{Saisir} \(a\) et \(b\) \(n\leftarrow 10\times a+b\)
+\textbf{Afficher} \(n\) \(c\leftarrow a\) \(a\leftarrow b\)
+\(b\leftarrow c\) \(n\leftarrow 10\times a+b\) \textbf{Afficher} \(n\)
+\end{quote}
+
+    \textbf{1.} Utiliser un tableau, dont les entrées sont les variables de
+cet algorithme, afin de le tester pour \(a=2\) et \(b=3\).
+
+    \begin{longtable}[]{@{}ccccc@{}}
+\toprule
+Variables & - & - & - & -\tabularnewline
+\midrule
+\endhead
+a & 2 & & &\tabularnewline
+b & 3 & & &\tabularnewline
+c & & & &\tabularnewline
+n & & & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \textbf{2.} Reprendre le travail avec un autre couple d'entiers compris
+entre \(0\) et \(9\).
+
+    
+
+    \textbf{3.} Expliquer l'importance de la variable \(c\).
+
+    
+
+    \textbf{4.} Le traduire en Python ci-dessous pour vérifier vos réponse :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{exercice-4}{%
+\subsubsection{Exercice 4}\label{exercice-4}}
+
+On considère deux points dans un repère orthonormé du plan.
+
+Compléter le script suivant afin qu'il affiche les coordonnées du milieu
+\(I\) d'un segment \([AB]\) et le carré de la longueur de ce segment.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Pour saisir les données (ne rien modifier dans cette partie)}
+        \PY{n}{A} \PY{o}{=} \PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Saisir les coordonnées de A séparées d}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{une virgule : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{x\PYZus{}A}\PY{p}{,} \PY{n}{y\PYZus{}A} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{B} \PY{o}{=} \PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Saisir les coordonnées de B séparées d}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{une virgule : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{x\PYZus{}B}\PY{p}{,} \PY{n}{y\PYZus{}B} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{B}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{B}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Compléter la suite}
+        \PY{n}{x\PYZus{}I}\PY{p}{,} \PY{n}{y\PYZus{}I} \PY{o}{=} \PY{o}{.}\PY{o}{.}\PY{o}{.}
+        \PY{n}{AB\PYZus{}carre} \PY{o}{=} \PY{o}{.}\PY{o}{.}\PY{o}{.}
+        \PY{n+nb}{print}\PY{p}{(}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{)}
+\end{Verbatim}
+
+    \hypertarget{instructions-conditionnelles}{%
+\subsection{Instructions
+conditionnelles}\label{instructions-conditionnelles}}
+
+\hypertarget{duxe9finition}{%
+\subsubsection{Définition}\label{duxe9finition}}
+
+\begin{quote}
+La structure \texttt{si\ ...\ alors\ ...\ sinon\ ...} (qui se traduit
+par \texttt{if\ ...\ then\ ...\ else} en anglais) permet de définir une
+condition: \textbf{si} cette condition est remplie, \textbf{alors} on
+effectuera certaines instructions ; \textbf{sinon} on effectuera
+d'autres instructions.
+\end{quote}
+
+La structure générale est la suivante :
+
+\textbf{Si} Condition \textbf{alors}\\
+\textgreater{} Traitement \(1\)
+
+\textbf{sinon}\\
+\textgreater{} Traitement \(2\)
+
+La condition est soit \textit{vraie} soit \textit{fausse}, si elle est
+vraie le Traitement \(1\) est effectué, si elle est fausse c'est le
+Traitement \(2\) qui est effectué. L'intruction \texttt{sinon} n'est pas
+obligatoire.
+
+Sa traduction en Python est la suivante :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{if} \PY{n}{Condition}\PY{p}{:}
+            \PY{n}{Traitement1}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{Traitement2}
+\end{Verbatim}
+
+    \hypertarget{exercice-5}{%
+\subsubsection{Exercice 5}\label{exercice-5}}
+
+Pour les résultats du baccalauréat, l'ordinateur indique : -
+\texttt{admis} si l'élève a obtenu à l'écrit une moyenne supérieure ou
+égale à \(10\) ; - \texttt{oral} si sa moyenne appartient à l'intervalle
+\([8; 10[\) ; - \texttt{recalé} sinon.
+
+Écrire un script Python affichant les résultats suivant la note saisie
+par l'utilisateur :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{exercice-6}{%
+\subsubsection{Exercice 6}\label{exercice-6}}
+
+La fonction \(f\) est définie sur l'intervalle \([-5;6]\) par
+l'algorithme ci-dessous :
+
+\textbf{Saisir} \(x\)
+
+\textbf{Si} \(x\leq1\) \textbf{alors}
+
+\begin{quote}
+\(y\) \(\leftarrow\) \(-3x-7\)
+\end{quote}
+
+\textbf{Sinon} \textbf{Si} \(x\geq3\)
+
+\begin{quote}
+\begin{quote}
+\(y\) \(\leftarrow\) \(-\dfrac13x+5\)
+\end{quote}
+\end{quote}
+
+\begin{quote}
+\textbf{Sinon} \textgreater{} \(y\) \(\leftarrow\) \(2x-2\)
+\end{quote}
+
+\textbf{Afficher} \(f(x)=y\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Qu'affiche cette fonction pour les valeur \(-4\), \(-1\), \(0\), \(3\)
+  et \(6\).
+\item
+  Écrire le script Python correspondant ci-dessous (Sinon Si se traduit
+  par elif) :
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Pour afficher le résultat utiliser la ligne suivante }
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{f(}\PY{l+s+si}{\PYZob{}x\PYZcb{}}\PY{l+s+s2}{)=}\PY{l+s+si}{\PYZob{}y\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \hypertarget{les-boucles}{%
+\subsection{Les boucles}\label{les-boucles}}
+
+\hypertarget{duxe9finition}{%
+\subsubsection{Définition}\label{duxe9finition}}
+
+\begin{quote}
+Une \textbf{boucle bornée} est utilisée lorsque l'on veut
+\textbf{répéter un certain nombre de fois} les mêmes instructions.
+\end{quote}
+
+\hypertarget{remarque}{%
+\paragraph{Remarque}\label{remarque}}
+
+\begin{quote}
+Une variable sera utilisée pour \textbf{compter} le nombre de
+répétitions, on dit parle ainsi \textbf{d'itérations}. En général, elle
+prendra des valeurs entières. À chaque itération, la variable est
+incrémentée d'une unité (sauf indication contraire).
+\end{quote}
+
+La structure générale est la suivante :
+
+\textbf{Pour} i \textbf{allant de} 0 \textbf{jusqu'à} 9 \textbf{faire}
+\textgreater{} Instructions
+
+\textbf{FinPour}
+
+Dans cette boucle, les \emph{instructions} sont répétées 10 fois.
+
+\hypertarget{remarque-1}{%
+\paragraph{Remarque}\label{remarque-1}}
+
+\begin{quote}
+La variable i prendra successivement les valeurs : 0, 1, 2, 3, 4, 5, 6,
+7, 8 et 9.
+\end{quote}
+
+Sa traduction en Python est la suivante :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+             \PY{n}{Instructions}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+17.0
+
+    \end{Verbatim}
+
+    \hypertarget{exercice-7}{%
+\subsubsection{Exercice 7}\label{exercice-7}}
+
+On considère l'algorithme ci-dessous :
+
+\textbf{Saisir} n\\
+s \(\leftarrow\) 0\\
+\textbf{Pour} i \textbf{allant de} 1 \textbf{jusqu'à} n \textbf{faire}
+\textgreater{} s \(\leftarrow\) s + i
+
+\textbf{FinPour}\\
+\textbf{Afficher} s
+
+    \textbf{1.} Que retourne cet algorithme pour \(n=5\) ?
+
+    
+
+    \textbf{2.} Que fait cet algorithme ?
+
+    
+
+    \textbf{3.} Traduire cet algorithme en Python :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{les-fonctions}{%
+\subsection{Les fonctions}\label{les-fonctions}}
+
+\hypertarget{information}{%
+\subsubsection{Information}\label{information}}
+
+\begin{quote}
+Les fonctions permettent de décomposer un algorithme complexe en une
+série de sous-algorithmes plus simples, lesquels peuvent à leur tour
+être décomposés en fragments plus petits, et ainsi de suite. Une
+fonction \textbf{retourne} en \textbf{sortie} un ou des objet(s) et/ou
+exécute une tâche, pour cela on peut lui fournir un ou des
+\textbf{arguments} en \textbf{entrée}.\\
+Une fonction est ensuite \textbf{appelée} dans le cœur de l'algorithme.
+\end{quote}
+
+La structure générale est la suivante :
+
+\textbf{Définition} Fonction(paramètres):\\
+\textgreater{} Instructions\\
+\textgreater{} Retourne objets
+
+\textbf{FinDéfinition}\\
+\ldots{}\\
+\texttt{\#\ Appel\ de\ la\ fonction}~\\
+A \(\leftarrow\) Fonction(valeurs des paramètres)
+
+Sa syntaxe Python est la suivante :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{Fonction}\PY{p}{(}\PY{n}{paramètres}\PY{p}{)}\PY{p}{:}
+            \PY{n}{Instruction}
+            \PY{k}{return} \PY{n}{objets}
+        
+        \PY{c+c1}{\PYZsh{} Appel de la fonctio}
+        \PY{n}{A} \PY{o}{=} \PY{n}{Fonction}\PY{p}{(}\PY{n}{valeurs}\PY{p}{)}
+\end{Verbatim}
+
+    \hypertarget{remarques}{%
+\subsubsection{Remarques :}\label{remarques}}
+
+\begin{itemize}
+\tightlist
+\item
+  Il faut bien distinguer la définition de la fonction et son appel à
+  l'intérieur de l'algorithme.
+\item
+  Lors de cet appel, l'objet retourné par la fonction est affecté à la
+  variable A.
+\end{itemize}
+
+\hypertarget{exercice-8}{%
+\subsubsection{Exercice 8}\label{exercice-8}}
+
+Dans la fonction définie ci-dessous, les paramètres \(a\) et \(b\) sont
+positifs et $b\neq0$ :
+
+\textbf{Définition} mystère(\(a\),\(b\)):\\
+\textgreater{} \(r\) \(\leftarrow\) \(a\)\\
+\textgreater{} \(q\) \(\leftarrow\) \(0\)\\
+\textgreater{} \textbf{Tant que} \(r\geqslant b\) \textbf{faire}\\
+\textgreater{} \textgreater{} \(r \leftarrow r-b\)\\
+\textgreater{} \textgreater{} \(q \leftarrow q+1\)\\
+\textgreater{} \textgreater{} \textbf{FinTantque}\\
+\textgreater{} Retourne \(r\)
+
+\textbf{FinDéfinition}
+
+\hypertarget{remarque}{%
+\paragraph{Remarque}\label{remarque}}
+
+\begin{quote}
+Lorsque l'instruction \textbf{Retourne} est rencontrée, on sort de la
+fonction
+\end{quote}
+
+\textbf{1.} Tester la fonction avec les paramètres 15 et 5, puis, avec
+17 et 6.
+
+    
+
+    \textbf{2.} Expliquer pourquoi la boucle se termine toujours.
+
+    
+
+    \textbf{3.} Montrer qu'avant le début de la boucle ainsi qu'à la fin de
+chaque itération de la boucle, on a toujours \(a = bq + r\).
+
+    
+
+    \textbf{4.} Vérifier que la valeur retournée est toujours strictement
+inférieur à \(b\). Finalement, que fait cette fonction ?
+
+    
+
+    \textbf{5.} Traduire cette fonction en Python.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \textbf{6.} Vérifier vos résultats de la question \textbf{1.} en
+appelant cette fonction avec les valeurs correspondantes :
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \hypertarget{duxe9finition}{%
+\subsubsection{Définition}\label{duxe9finition}}
+
+\begin{quote}
+On appelle nombre premier, un nombre entier naturel ayant exactement
+deux diviseurs entiers naturels : 1 et lui-même.
+\end{quote}
+
+    \textbf{7.} Écrire une fonction \texttt{premier} qui retourne
+\texttt{True} si le nombre est premier et \texttt{False} sinon.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
