@@ -1,1 +1,1 @@
-# Cours-Premi-re-NSI
+# Cours de Première NSI
